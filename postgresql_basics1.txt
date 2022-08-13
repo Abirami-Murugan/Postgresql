@@ -1,0 +1,18 @@
+~$ sudo systemctl status postgresql
+ \q//exit from postgres console.
+ ctrl+D//exit from postgres mode.
+ \l
+ \dt
+ \c template0
+\dt
+DROP DATABASE student;
+DROP TABLE mycreation;
+create database payilagam;
+\c payilagam
+create table batch1(sNo int, name varchar(20), age int,trainer varchar(20),doj date);
+\dt
+\d batch1
+insert into batch1 values(1,'hari',21,'muthu','28/05/2022');
+insert into batch1 values(2,'ravi',21,'muthu','2022-05-13');
+select * from batch1;
+   
