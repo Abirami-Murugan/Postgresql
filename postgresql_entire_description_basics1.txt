@@ -1,0 +1,340 @@
+abirami@abirami-HP-Laptop-15-da3xxx:~$ sudo systemctl status postgresql
+[sudo] password for abirami:            
+● postgresql.service - PostgreSQL RDBMS
+     Loaded: loaded (/lib/systemd/system/postgresql.service; enabled; vendor pr>
+     Active: active (exited) since Sat 2022-08-13 11:17:12 IST; 6h ago
+    Process: 1268 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
+   Main PID: 1268 (code=exited, status=0/SUCCESS)
+
+Aug 13 11:17:12 abirami-HP-Laptop-15-da3xxx systemd[1]: Starting PostgreSQL RDB>
+Aug 13 11:17:12 abirami-HP-Laptop-15-da3xxx systemd[1]: Finished PostgreSQL RDB>
+abirami@abirami-HP-Laptop-15-da3xxx:~$ sudo -i -u postgres
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=#  \q
+postgres@abirami-HP-Laptop-15-da3xxx:~$ sudo -i -u postgres
+Sorry, user postgres is not allowed to execute '/bin/bash' as postgres on abirami-HP-Laptop-15-da3xxx.
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ abirami   | postgres | UTF8     | en_IN   | en_IN | 
+ college   | postgres | UTF8     | en_IN   | en_IN | 
+ learning  | postgres | UTF8     | en_IN   | en_IN | 
+ notebook  | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam | postgres | UTF8     | en_IN   | en_IN | 
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ school    | postgres | UTF8     | en_IN   | en_IN | 
+ student   | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(10 rows)
+
+postgres=# \dt
+           List of relations
+ Schema |    Name    | Type  |  Owner   
+--------+------------+-------+----------
+ public | employee   | table | postgres
+ public | mycreation | table | postgres
+(2 rows)
+
+postgres=# \c template0
+FATAL:  database "template0" is not currently accepting connections
+Previous connection kept
+postgres=# create database student
+postgres-# create database Student
+postgres-# create database schoolStudent
+postgres-# \q
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# create database collegeStudent
+postgres-# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ abirami   | postgres | UTF8     | en_IN   | en_IN | 
+ college   | postgres | UTF8     | en_IN   | en_IN | 
+ learning  | postgres | UTF8     | en_IN   | en_IN | 
+ notebook  | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam | postgres | UTF8     | en_IN   | en_IN | 
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ school    | postgres | UTF8     | en_IN   | en_IN | 
+ student   | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(10 rows)
+
+postgres-# create database Friends
+postgres-# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ abirami   | postgres | UTF8     | en_IN   | en_IN | 
+ college   | postgres | UTF8     | en_IN   | en_IN | 
+ learning  | postgres | UTF8     | en_IN   | en_IN | 
+ notebook  | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam | postgres | UTF8     | en_IN   | en_IN | 
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ school    | postgres | UTF8     | en_IN   | en_IN | 
+ student   | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(10 rows)
+
+postgres-# \c Friends
+FATAL:  database "Friends" does not exist
+Previous connection kept
+postgres-# create database collegeStudent;
+ERROR:  syntax error at or near "create"
+LINE 2: create database Friends
+        ^
+postgres=# create database Friends;
+CREATE DATABASE
+postgres=# create database collegeStudent;
+CREATE DATABASE
+postgres=# \l
+                               List of databases
+      Name      |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+----------------+----------+----------+---------+-------+-----------------------
+ abirami        | postgres | UTF8     | en_IN   | en_IN | 
+ college        | postgres | UTF8     | en_IN   | en_IN | 
+ collegestudent | postgres | UTF8     | en_IN   | en_IN | 
+ friends        | postgres | UTF8     | en_IN   | en_IN | 
+ learning       | postgres | UTF8     | en_IN   | en_IN | 
+ notebook       | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam      | postgres | UTF8     | en_IN   | en_IN | 
+ postgres       | postgres | UTF8     | en_IN   | en_IN | 
+ school         | postgres | UTF8     | en_IN   | en_IN | 
+ student        | postgres | UTF8     | en_IN   | en_IN | 
+ template0      | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+                |          |          |         |       | postgres=CTc/postgres
+ template1      | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+                |          |          |         |       | postgres=CTc/postgres
+(12 rows)
+
+postgres=# create database consultancy;
+CREATE DATABASE
+postgres=# create database payilagam
+postgres-# create database payilagam;
+ERROR:  syntax error at or near "create"
+LINE 2: create database payilagam;
+        ^
+postgres=# create database payilagam;
+ERROR:  database "payilagam" already exists
+postgres=# create database payilagam1;
+CREATE DATABASE
+postgres=# \l
+                               List of databases
+      Name      |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+----------------+----------+----------+---------+-------+-----------------------
+ abirami        | postgres | UTF8     | en_IN   | en_IN | 
+ college        | postgres | UTF8     | en_IN   | en_IN | 
+ collegestudent | postgres | UTF8     | en_IN   | en_IN | 
+ consultancy    | postgres | UTF8     | en_IN   | en_IN | 
+ friends        | postgres | UTF8     | en_IN   | en_IN | 
+ learning       | postgres | UTF8     | en_IN   | en_IN | 
+ notebook       | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam      | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam1     | postgres | UTF8     | en_IN   | en_IN | 
+ postgres       | postgres | UTF8     | en_IN   | en_IN | 
+ school         | postgres | UTF8     | en_IN   | en_IN | 
+ student        | postgres | UTF8     | en_IN   | en_IN | 
+ template0      | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+                |          |          |         |       | postgres=CTc/postgres
+ template1      | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+                |          |          |         |       | postgres=CTc/postgres
+(14 rows)
+
+postgres=# \c payilagam
+You are now connected to database "payilagam" as user "postgres".
+payilagam=# \c payilagam1
+You are now connected to database "payilagam1" as user "postgres".
+payilagam1=# \dt
+Did not find any relations.
+payilagam1=#  DROP DATABASE payilagam;
+DROP DATABASE
+payilagam1=# \c payilagam
+FATAL:  database "payilagam" does not exist
+Previous connection kept
+payilagam1=# DROP DATABASE abirami
+payilagam1-# DROP DATABASE abirami;
+ERROR:  syntax error at or near "DROP"
+LINE 2: DROP DATABASE abirami;
+        ^
+payilagam1=# DROP DATABASE abirami;
+DROP DATABASE
+payilagam1=# \l
+                               List of databases
+      Name      |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+----------------+----------+----------+---------+-------+-----------------------
+ college        | postgres | UTF8     | en_IN   | en_IN | 
+ collegestudent | postgres | UTF8     | en_IN   | en_IN | 
+ consultancy    | postgres | UTF8     | en_IN   | en_IN | 
+ friends        | postgres | UTF8     | en_IN   | en_IN | 
+ learning       | postgres | UTF8     | en_IN   | en_IN | 
+ notebook       | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam1     | postgres | UTF8     | en_IN   | en_IN | 
+ postgres       | postgres | UTF8     | en_IN   | en_IN | 
+ school         | postgres | UTF8     | en_IN   | en_IN | 
+ student        | postgres | UTF8     | en_IN   | en_IN | 
+ template0      | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+                |          |          |         |       | postgres=CTc/postgres
+ template1      | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+                |          |          |         |       | postgres=CTc/postgres
+(12 rows)
+
+payilagam1=# DROP DATABASE college;
+DROP DATABASE
+payilagam1=# DROP DATABASE collegestudent;
+DROP DATABASE
+payilagam1=# DROP DATABASE consultancy;
+DROP DATABASE
+payilagam1=# DROP DATABASE friends;
+DROP DATABASE
+payilagam1=# DROP DATABASE learning;
+DROP DATABASE
+payilagam1=# DROP DATABASE notebook;
+DROP DATABASE
+payilagam1=# \;
+payilagam1-# \l
+                             List of databases
+    Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+------------+----------+----------+---------+-------+-----------------------
+ payilagam1 | postgres | UTF8     | en_IN   | en_IN | 
+ postgres   | postgres | UTF8     | en_IN   | en_IN | 
+ school     | postgres | UTF8     | en_IN   | en_IN | 
+ student    | postgres | UTF8     | en_IN   | en_IN | 
+ template0  | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+            |          |          |         |       | postgres=CTc/postgres
+ template1  | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+            |          |          |         |       | postgres=CTc/postgres
+(6 rows)
+
+payilagam1-# DROP DATABASE payilagam1;
+ERROR:  cannot drop the currently open database
+payilagam1=# DROP DATABASE school;
+DROP DATABASE
+payilagam1=# DROP DATABASE student;
+DROP DATABASE
+payilagam1=# \l
+                             List of databases
+    Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+------------+----------+----------+---------+-------+-----------------------
+ payilagam1 | postgres | UTF8     | en_IN   | en_IN | 
+ postgres   | postgres | UTF8     | en_IN   | en_IN | 
+ template0  | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+            |          |          |         |       | postgres=CTc/postgres
+ template1  | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+            |          |          |         |       | postgres=CTc/postgres
+(4 rows)
+
+payilagam1=# \q
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# DROP DATABASE payilagam1
+postgres-# 
+postgres-# DROP DATABASE payilagam1;
+ERROR:  syntax error at or near "DROP"
+LINE 2: DROP DATABASE payilagam1;
+        ^
+postgres=# DROP DATABASE payilagam1;
+DROP DATABASE
+postgres=# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(3 rows)
+
+postgres=# create DATABASE student;
+CREATE DATABASE
+postgres=# create DATABASE payilagam;
+CREATE DATABASE
+postgres=# \dt
+           List of relations
+ Schema |    Name    | Type  |  Owner   
+--------+------------+-------+----------
+ public | employee   | table | postgres
+ public | mycreation | table | postgres
+(2 rows)
+
+postgres=# DROP TABLE public;
+ERROR:  table "public" does not exist
+postgres=# DROP TABLE employee;
+DROP TABLE
+postgres=# DROP TABLE mycreation;
+DROP TABLE
+postgres=# \dt
+Did not find any relations.
+postgres=# \dt^Z
+[1]+  Stopped                 psql
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# \c payilagam
+You are now connected to database "payilagam" as user "postgres".
+payilagam=# crate table batch1(sNo int, name varchar(20),age int,trainer varchar(20),doj date);
+ERROR:  syntax error at or near "crate"
+LINE 1: crate table batch1(sNo int, name varchar(20),age int,trainer...
+        ^
+payilagam=# create table batch1(sNo int, name varchar(20), age int,trainer varchar(20),doj date);
+CREATE TABLE
+payilagam=# \dt
+         List of relations
+ Schema |  Name  | Type  |  Owner   
+--------+--------+-------+----------
+ public | batch1 | table | postgres
+(1 row)
+
+payilagam=# \d batch1
+                      Table "public.batch1"
+ Column  |         Type          | Collation | Nullable | Default 
+---------+-----------------------+-----------+----------+---------
+ sno     | integer               |           |          | 
+ name    | character varying(20) |           |          | 
+ age     | integer               |           |          | 
+ trainer | character varying(20) |           |          | 
+ doj     | date                  |           |          | 
+
+payilagam=# insert into batch1 values (1,'hari',21,'muthu',current date);
+ERROR:  syntax error at or near "date"
+LINE 1: ...nsert into batch1 values (1,'hari',21,'muthu',current date);
+                                                                 ^
+payilagam=# insert into batch1 values(1,'hari',21,'muthu','28/05/2022');
+INSERT 0 1
+payilagam=# select * from batch1;
+ sno | name | age | trainer |    doj     
+-----+------+-----+---------+------------
+   1 | hari |  21 | muthu   | 2022-05-28
+(1 row)
+
+payilagam=#      
+payilagam=#  insert into batch1 values(2,'ravi',21,'muthu','2022-05-13');
+INSERT 0 1
+payilagam=# select * from batch1;
+ sno | name | age | trainer |    doj     
+-----+------+-----+---------+------------
+   1 | hari |  21 | muthu   | 2022-05-28
+   2 | ravi |  21 | muthu   | 2022-05-13
+(2 rows)
