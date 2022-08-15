@@ -1,0 +1,279 @@
+abirami@abirami-HP-Laptop-15-da3xxx:~$ sudo -i -u postgres
+[sudo] password for abirami:            
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# DROP DATABASE payilagam;
+DROP DATABASE
+postgres=# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ student   | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(4 rows)
+
+postgres=# DROP DATABASE student;
+DROP DATABASE
+postgres=# \dt
+Did not find any relations.
+postgres=# \q
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# CREATE DATABASE Payilagam;
+CREATE DATABASE
+postgres=# create table values(sNo int, Name Varchar(20),age int, trainer VArchar(20),doj '28-02-2022')
+postgres-# 
+postgres-# CREATE DATABASE Payilagam;
+ERROR:  syntax error at or near "'28-02-2022'"
+LINE 1: ...Name Varchar(20),age int, trainer VArchar(20),doj '28-02-202...
+                                                             ^
+postgres=# \c payilagam;
+You are now connected to database "payilagam" as user "postgres".
+payilagam=# create table batch1 (sNO int, name varchar(20),age int, trainer varchr(20),doj '28-02-2022')
+payilagam-# create table batch1(sNo int, name varchar(20),age int trainer varchar(20),doj '20-02-2022');
+ERROR:  syntax error at or near "'28-02-2022'"
+LINE 1: ... name varchar(20),age int, trainer varchr(20),doj '28-02-202...
+                                                             ^
+payilagam=# create table batch1 (sNo int, name varchar(20),age int, trainer varchar(20),doj '28-02-2022');
+ERROR:  syntax error at or near "'28-02-2022'"
+LINE 1: ...name varchar(20),age int, trainer varchar(20),doj '28-02-202...
+                                                             ^
+payilagam=# create table batch1 (sNo int, name varchar(20),age int, trainer varchar(20),doj '2022-05-28');
+ERROR:  syntax error at or near "'2022-05-28'"
+LINE 1: ...name varchar(20),age int, trainer varchar(20),doj '2022-05-2...
+                                                             ^
+payilagam=# create table batch1(sNo int, name Varchar(20),age int , Trainer Varchar(20), doj date);
+CREATE TABLE
+payilagam=# /dt
+payilagam-# \dt
+         List of relations
+ Schema |  Name  | Type  |  Owner   
+--------+--------+-------+----------
+ public | batch1 | table | postgres
+(1 row)
+
+payilagam-# \d batch1
+                      Table "public.batch1"
+ Column  |         Type          | Collation | Nullable | Default 
+---------+-----------------------+-----------+----------+---------
+ sno     | integer               |           |          | 
+ name    | character varying(20) |           |          | 
+ age     | integer               |           |          | 
+ trainer | character varying(20) |           |          | 
+ doj     | date                  |           |          | 
+
+payilagam-# insert into batch1 values(1,'hari',20,'muthu',doj '20-01-2022');
+ERROR:  syntax error at or near "/"
+LINE 1: /dt
+        ^
+payilagam=# insert into batch1 values(1,'hari',20,'muthu',doj '20-01-2022');
+ERROR:  type "doj" does not exist
+LINE 1: insert into batch1 values(1,'hari',20,'muthu',doj '20-01-202...
+                                                      ^
+payilagam=# insert into batch1 values(1,'hari',20,'muthu','20-01-2022');
+INSERT 0 1
+payilagam=# select * from batch1;
+ sno | name | age | trainer |    doj     
+-----+------+-----+---------+------------
+   1 | hari |  20 | muthu   | 2022-01-20
+(1 row)
+
+payilagam=# insert into batch1 values(2,'ravi',22,'muthu','21-01-2022');
+INSERT 0 1
+payilagam=# select * from batch1;
+ sno | name | age | trainer |    doj     
+-----+------+-----+---------+------------
+   1 | hari |  20 | muthu   | 2022-01-20
+   2 | ravi |  22 | muthu   | 2022-01-21
+(2 rows)
+
+payilagam=# create table student personal details;
+ERROR:  syntax error at or near "personal"
+LINE 1: create table student personal details;
+                             ^
+payilagam=# create table studentPersonalDetails;
+ERROR:  syntax error at or near ";"
+LINE 1: create table studentPersonalDetails;
+                                           ^
+payilagam=# CREATE TABLE studentPersonalDetails;
+ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE studentPersonalDetails;
+                                           ^
+payilagam=# create table studentPersonalDetails batch1(Name Varchar(20),Marks int);
+ERROR:  syntax error at or near "batch1"
+LINE 1: create table studentPersonalDetails batch1(Name Varchar(20),...
+                                            ^
+payilagam=# create table studentPersonalDetails values(Name Varchar(20),Marks int);
+ERROR:  syntax error at or near "values"
+LINE 1: create table studentPersonalDetails values(Name Varchar(20),...
+                                            ^
+payilagam=# create table studentPersonalDetails(Name Varchar(20),Marks int);
+CREATE TABLE
+payilagam=# insert into studentPersonalDetails values('Abirami' 100);
+ERROR:  syntax error at or near "100"
+LINE 1: insert into studentPersonalDetails values('Abirami' 100);
+                                                            ^
+payilagam=# insert into studentPersonalDetails values('Abirami', 100);
+INSERT 0 1
+payilagam=# insert into studentPersonalDetails values('Monisha',95);
+INSERT 0 1
+payilagam=# DROP TABLE studentPersonalDetails;
+DROP TABLE
+payilagam=# CREATE TABLE studentMarkList(Name Varchar(20),Marks int);
+CREATE TABLE
+payilagam=# insert into studentMarkList('Abirami',100);
+ERROR:  syntax error at or near "'Abirami'"
+LINE 1: insert into studentMarkList('Abirami',100);
+                                    ^
+payilagam=# insert into studentMarkList('Abirami', 100);
+ERROR:  syntax error at or near "'Abirami'"
+LINE 1: insert into studentMarkList('Abirami', 100);
+                                    ^
+payilagam=# insert into studentMarkList values('Abirami' , 100);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Monisha',98);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Nandakumar',95);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Immanuel Sharon',97);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Thoufeequee',96);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Arun Kumar',90);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Mukesh',87);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Poovarasi',85);
+INSERT 0 1
+payilagam=# insert into studentMarkList values('Mayilarasi',88);
+INSERT 0 1
+payilagam=# select * from payilagam;
+ERROR:  relation "payilagam" does not exist
+LINE 1: select * from payilagam;
+                      ^
+payilagam=# select * from studentMarkList;
+      name       | marks 
+-----------------+-------
+ Abirami         |   100
+ Monisha         |    98
+ Nandakumar      |    95
+ Immanuel Sharon |    97
+ Thoufeequee     |    96
+ Arun Kumar      |    90
+ Mukesh          |    87
+ Poovarasi       |    85
+ Mayilarasi      |    88
+(9 rows)
+
+payilagam=# create table Register(Roll_NO int, Name varchar(20));
+CREATE TABLE
+payilagam=# insert into Register values(1,Abirami);
+ERROR:  column "abirami" does not exist
+LINE 1: insert into Register values(1,Abirami);
+                                      ^
+payilagam=# insert into Register values(1,'Abirami');
+INSERT 0 1
+payilagam=# insert into Register values(2,'Monisha');
+INSERT 0 1
+payilagam=# insert into Register values(3,'Nandakumar');
+INSERT 0 1
+payilagam=# insert into Register values(4,'Immanuel Sharon');
+INSERT 0 1
+payilagam=# insert into Register values(5,'Thoufeequee');
+INSERT 0 1
+payilagam=# insert into Register values(6,'Arun Kumar');
+INSERT 0 1
+payilagam=# insert into Register values(7,'Mukesh');
+INSERT 0 1
+payilagam=# insert into Register values(8,'Poovarasi');
+INSERT 0 1
+payilagam=# insert into Register values(9,'Mayilarasi');
+INSERT 0 1
+payilagam=# select * from Register;
+ roll_no |      name       
+---------+-----------------
+       1 | Abirami
+       2 | Monisha
+       3 | Nandakumar
+       4 | Immanuel Sharon
+       5 | Thoufeequee
+       6 | Arun Kumar
+       7 | Mukesh
+       8 | Poovarasi
+       9 | Mayilarasi
+(9 rows)
+
+payilagam=# \dt
+              List of relations
+ Schema |      Name       | Type  |  Owner   
+--------+-----------------+-------+----------
+ public | batch1          | table | postgres
+ public | register        | table | postgres
+ public | studentmarklist | table | postgres
+(3 rows)
+
+payilagam=# DROP TABLE batch1;
+DROP TABLE
+payilagam=# CREATE TABLE personalDetails;
+ERROR:  syntax error at or near ";"
+LINE 1: CREATE TABLE personalDetails;
+                                    ^
+payilagam=# CREATE TABLE batch1(sNo int, Name Varchar(20),age int, trainer Varchar(20),doj date);
+CREATE TABLE
+payilagam=# insert into batch1 values(1,'Abirami',20,'muthu',28-01-2022);
+ERROR:  column "doj" is of type date but expression is of type integer
+LINE 1: insert into batch1 values(1,'Abirami',20,'muthu',28-01-2022)...
+                                                         ^
+HINT:  You will need to rewrite or cast the expression.
+payilagam=# insert into batch1 values(1,'Abirami',20,'muthu','28-01-2022');
+INSERT 0 1
+payilagam=# insert into batch1 values(2,'Monisha',22,'muthu','29-01-2022');
+INSERT 0 1
+payilagam=# insert into batch1 values(3,'Nandakumar',22,'muthu','30-01-2022');
+INSERT 0 1
+payilagam=# insert into batch1 values(4,'Immanuel Sharon',24,'muthu','31-01-2022');
+INSERT 0 1
+payilagam=# insert into batch1 values(5,'Thoufeequee',25,'muthu','01-02-2022');
+INSERT 0 1
+payilagam=# insert into batch1 values(6,'Arun Kumar',26,'muthu','02-02-2022');
+INSERT 0 1
+payilagam=# insert into batch1 values(7,'Mukesh',27,'muthu',03-02-2002);
+ERROR:  column "doj" is of type date but expression is of type integer
+LINE 1: insert into batch1 values(7,'Mukesh',27,'muthu',03-02-2002);
+                                                        ^
+HINT:  You will need to rewrite or cast the expression.
+payilagam=# insert into batch1 values(7,'Mukesh',27,'muthu','03-02-2002');
+INSERT 0 1
+payilagam=# insert into batch1 values(8,'Poovarasi',28,'muthu','04-02-2022');
+INSERT 0 1
+payilagam=# insert into batch1 values(9,'Mayilarasi',23,'muthu','05-02-2022');
+INSERT 0 1
+payilagam=# select * from batch1;
+ sno |      name       | age | trainer |    doj     
+-----+-----------------+-----+---------+------------
+   1 | Abirami         |  20 | muthu   | 2022-01-28
+   2 | Monisha         |  22 | muthu   | 2022-01-29
+   3 | Nandakumar      |  22 | muthu   | 2022-01-30
+   4 | Immanuel Sharon |  24 | muthu   | 2022-01-31
+   5 | Thoufeequee     |  25 | muthu   | 2022-02-01
+   6 | Arun Kumar      |  26 | muthu   | 2022-02-02
+   7 | Mukesh          |  27 | muthu   | 2002-02-03
+   8 | Poovarasi       |  28 | muthu   | 2022-02-04
+   9 | Mayilarasi      |  23 | muthu   | 2022-02-05
+(9 rows)
+
+payilagam=# create table studentPersonalDetails;
+ERROR:  syntax error at or near ";"
+LINE 1: create table studentPersonalDetails;
+                                           ^
+payilagam=# create table studentPersonalDetails()
+
+
