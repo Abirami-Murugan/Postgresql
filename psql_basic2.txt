@@ -1,0 +1,706 @@
+insert into employee values
+(124,'Ramesh','Developer','2022-06-02',22000,20,true),
+(125,'Rajesh','Tester','2021-06-02',20000,25,false),
+(111,'Lavanya','Admin','2021-04-02',30000,26,true);
+
+dml
+insert
+delete
+update
+
+DDL://It talks about only the table and it's structure.
+create, alter,drop,truncate,rename.
+
+under alter 
+rename, modify,add,drop, will come.
+
+
+
+SQL class -2
+
+
+
+insert into employee values
+(124,'Ramesh','Developer','2022-06-02',22000,20,true),
+(125,'Rajesh','Tester','2021-06-02',20000,25,false),
+(111,'Lavanya','Admin','2021-04-02',30000,26,true);
+
+dml
+insert
+delete
+update
+
+DDL://It talks about only the table and it's structure.
+create, alter,drop,truncate,rename.
+
+abirami@abirami-HP-Laptop-15-da3xxx:~$ sudo -i -u postgres
+[sudo] password for abirami:            
+postgres@abirami-HP-Laptop-15-da3xxx:~$ \l
+l: command not found
+postgres@abirami-HP-Laptop-15-da3xxx:~$ \l;
+l: command not found
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.12 (Ubuntu 12.12-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# \l;
+invalid command \l;
+Try \? for help.
+postgres=# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ learning  | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam | postgres | UTF8     | en_IN   | en_IN | 
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ student   | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(6 rows)
+
+postgres=# drop database learning;
+DROP DATABASE
+postgres=# create database learning;
+CREATE DATABASE
+postgres=# \l;
+invalid command \l;
+Try \? for help.
+postgres=# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ learning  | postgres | UTF8     | en_IN   | en_IN | 
+ payilagam | postgres | UTF8     | en_IN   | en_IN | 
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ student   | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(6 rows)
+
+postgres=# \c learning;
+You are now connected to database "learning" as user "postgres".
+learning=# \dt
+Did not find any relations.
+learning=# create table Employee(EmpId int, Name Varchar(15),Designation Varchar(20),Doj date, Salary int, Age int,Status Boolean default false);
+CREATE TABLE
+learning=# \dt
+          List of relations
+ Schema |   Name   | Type  |  Owner   
+--------+----------+-------+----------
+ public | employee | table | postgres
+(1 row)
+
+learning=# \d employee;
+                       Table "public.employee"
+   Column    |         Type          | Collation | Nullable | Default 
+-------------+-----------------------+-----------+----------+---------
+ empid       | integer               |           |          | 
+ name        | character varying(15) |           |          | 
+ designation | character varying(20) |           |          | 
+ doj         | date                  |           |          | 
+ salary      | integer               |           |          | 
+ age         | integer               |           |          | 
+ status      | boolean               |           |          | false
+
+learning=# \d employee;^Z
+[1]+  Stopped                 psql
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.12 (Ubuntu 12.12-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# 
+postgres=# \c learning;
+You are now connected to database "learning" as user "postgres".
+learning=# insert into employee values(123,'Hari','Junior Developer','2022-05-02',25000,23,true);
+INSERT 0 1
+learning=# insert into employee values
+learning-# (124,'Ramesh','Developer','2022-06-02',22000,20,true),
+learning-# (125,'Rajesh','Tester','2021-06-02',20000,25,false),
+learning-# (111,'Lavanya','Admin','2021-04-02',30000,26,true);
+INSERT 0 3
+learning=# \dt
+          List of relations
+ Schema |   Name   | Type  |  Owner   
+--------+----------+-------+----------
+ public | employee | table | postgres
+(1 row)
+
+learning=# \d employee;
+                       Table "public.employee"
+   Column    |         Type          | Collation | Nullable | Default 
+-------------+-----------------------+-----------+----------+---------
+ empid       | integer               |           |          | 
+ name        | character varying(15) |           |          | 
+ designation | character varying(20) |           |          | 
+ doj         | date                  |           |          | 
+ salary      | integer               |           |          | 
+ age         | integer               |           |          | 
+ status      | boolean               |           |          | false
+
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   123 | Hari    | Junior Developer | 2022-05-02 |  25000 |  23 | t
+   124 | Ramesh  | Developer        | 2022-06-02 |  22000 |  20 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   111 | Lavanya | Admin            | 2021-04-02 |  30000 |  26 | t
+(4 rows)
+
+learning=# update employee designation = 'Administrator' wher emp_id = 111;
+ERROR:  syntax error at or near "="
+LINE 1: update employee designation = 'Administrator' wher emp_id = ...
+                                    ^
+learning=#  update employee set Designation = 'Administrator' where emp_id = 111;
+ERROR:  column "emp_id" does not exist
+LINE 1: ... employee set Designation = 'Administrator' where emp_id = 1...
+                                                             ^
+HINT:  Perhaps you meant to reference the column "employee.empid".
+learning=# \d employee;
+                       Table "public.employee"
+   Column    |         Type          | Collation | Nullable | Default 
+-------------+-----------------------+-----------+----------+---------
+ empid       | integer               |           |          | 
+ name        | character varying(15) |           |          | 
+ designation | character varying(20) |           |          | 
+ doj         | date                  |           |          | 
+ salary      | integer               |           |          | 
+ age         | integer               |           |          | 
+ status      | boolean               |           |          | false
+
+learning=#  update employee set Designation = 'Administrator' where empid = 111;
+UPDATE 1
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   123 | Hari    | Junior Developer | 2022-05-02 |  25000 |  23 | t
+   124 | Ramesh  | Developer        | 2022-06-02 |  22000 |  20 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+(4 rows)
+
+learning=# update employee salary = 30000 where name = 'Rajesh';
+ERROR:  syntax error at or near "="
+LINE 1: update employee salary = 30000 where name = 'Rajesh';
+                               ^
+learning=# update employee set salary = 30000 where name = 'Rajesh';
+UPDATE 1
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   123 | Hari    | Junior Developer | 2022-05-02 |  25000 |  23 | t
+   124 | Ramesh  | Developer        | 2022-06-02 |  22000 |  20 | t
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  30000 |  25 | f
+(4 rows)
+
+learning=# update employee set salary = '20000' where name = 'Rajesh';
+UPDATE 1
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   123 | Hari    | Junior Developer | 2022-05-02 |  25000 |  23 | t
+   124 | Ramesh  | Developer        | 2022-06-02 |  22000 |  20 | t
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+(4 rows)
+
+learning=# update employee set salare = 30000;
+ERROR:  column "salare" of relation "employee" does not exist
+LINE 1: update employee set salare = 30000;
+                            ^
+learning=# update employee set salary = 30000;
+UPDATE 4
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   123 | Hari    | Junior Developer | 2022-05-02 |  30000 |  23 | t
+   124 | Ramesh  | Developer        | 2022-06-02 |  30000 |  20 | t
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  30000 |  25 | f
+(4 rows)
+
+learning=# update employee set salary = 20000 where name =  
+learning-# 
+learning-# \dt
+          List of relations
+ Schema |   Name   | Type  |  Owner   
+--------+----------+-------+----------
+ public | employee | table | postgres
+(1 row)
+
+learning-# update employee set salary = 20000 where name = 'Rajesh';
+ERROR:  syntax error at or near "employee"
+LINE 2: update employee set salary = 20000 where name = 'Rajesh';
+               ^
+learning=# update employee set salary = 20000 where name = 'Rajesh';
+UPDATE 1
+learning=# update employee set salary = 22000 where name = 'Ramesh';
+UPDATE 1
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   123 | Hari    | Junior Developer | 2022-05-02 |  30000 |  23 | t
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  22000 |  20 | t
+(4 rows)
+
+learning=# update employee set salary = 25000 where name = 'Hari';
+UPDATE 1
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  22000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  25000 |  23 | t
+(4 rows)
+
+learning=# update employee set salary = 35000 where empid in (123,124);
+UPDATE 2
+learning=# select * from employee;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  35000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  35000 |  23 | t
+(4 rows)
+
+learning=# create table EmployeeBackup as employee;
+ERROR:  syntax error at or near "employee"
+LINE 1: create table EmployeeBackup as employee;
+                                       ^
+learning=# create table EmployeeBackup as Employee;
+ERROR:  syntax error at or near "Employee"
+LINE 1: create table EmployeeBackup as Employee;
+                                       ^
+learning=# create table EmployeeBackup as (select * from Employee);
+SELECT 4
+learning=# select * from employeebackup
+learning-# select * from EmployeeBackup;
+ERROR:  syntax error at or near "select"
+LINE 2: select * from EmployeeBackup;
+        ^
+learning=# select * from EmployeeBackup;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  35000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  35000 |  23 | t
+(4 rows)
+
+learning=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | employee       | table | postgres
+ public | employeebackup | table | postgres
+(2 rows)
+
+learning=# delete from employee where empid = 123; 
+DELETE 1
+learning=# select * from eployee;
+ERROR:  relation "eployee" does not exist
+LINE 1: select * from eployee;
+                      ^
+learning=# select * from employee;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester        | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer     | 2022-06-02 |  35000 |  20 | t
+(3 rows)
+
+learning=# delete from employee where empid in(124,125);
+DELETE 2
+learning=# select * from employee;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+(1 row)
+
+learning=# count * from employee;
+ERROR:  syntax error at or near "count"
+LINE 1: count * from employee;
+        ^
+learning=# select * from employee;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+(1 row)
+
+learning=# select count * from employee;
+ERROR:  syntax error at or near "from"
+LINE 1: select count * from employee;
+                       ^
+learning=# select count(*) from employee;
+ count 
+-------
+     1
+(1 row)
+
+learning=# select count(*) from employeebackup;
+ count 
+-------
+     4
+(1 row)
+
+learning=# 
+
+
+
+
+
+
+
+
+
+
+
+abirami@abirami-HP-Laptop-15-da3xxx:~$ sudo -i -u postgres
+[sudo] password for abirami:            
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.12 (Ubuntu 12.12-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# \c learning;
+You are now connected to database "learning" as user "postgres".
+learning=# rename employee to emp;
+ERROR:  syntax error at or near "rename"
+LINE 1: rename employee to emp;
+        ^
+learning=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | employee       | table | postgres
+ public | employeebackup | table | postgres
+(2 rows)
+
+learning=# alter table employee to emp;
+ERROR:  syntax error at or near "to"
+LINE 1: alter table employee to emp;
+                             ^
+learning=# alter employee to emp;
+ERROR:  syntax error at or near "employee"
+LINE 1: alter employee to emp;
+              ^
+learning=# alter table employee to emp;
+ERROR:  syntax error at or near "to"
+LINE 1: alter table employee to emp;
+                             ^
+learning=# alter table employee rename to emp;
+ALTER TABLE
+learning=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | emp            | table | postgres
+ public | employeebackup | table | postgres
+(2 rows)
+
+learning=# alter coloumn designation rename to desig;
+ERROR:  syntax error at or near "coloumn"
+LINE 1: alter coloumn designation rename to desig;
+              ^
+learning=# \d emp;
+                          Table "public.emp"
+   Column    |         Type          | Collation | Nullable | Default 
+-------------+-----------------------+-----------+----------+---------
+ empid       | integer               |           |          | 
+ name        | character varying(15) |           |          | 
+ designation | character varying(20) |           |          | 
+ doj         | date                  |           |          | 
+ salary      | integer               |           |          | 
+ age         | integer               |           |          | 
+ status      | boolean               |           |          | false
+
+learning=# select * from emp;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+(1 row)
+
+learning=# select * from employee;
+ERROR:  relation "employee" does not exist
+LINE 1: select * from employee;
+                      ^
+learning=# alter table emp column designation to desig;
+ERROR:  syntax error at or near "column"
+LINE 1: alter table emp column designation to desig;
+                        ^
+learning=# alter table emp column rename designation to desig;
+ERROR:  syntax error at or near "column"
+LINE 1: alter table emp column rename designation to desig;
+                        ^
+learning=# alter table emp rename column designation to desig;
+ALTER TABLE
+learning=# alter table emp rename designation to desig;
+ERROR:  column "designation" does not exist
+learning=# alter table emp rename desig to designation;
+ALTER TABLE
+learning=# select * from employee;
+ERROR:  relation "employee" does not exist
+LINE 1: select * from employee;
+                      ^
+learning=# select * from emp;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+(1 row)
+
+learning=# alter table emp rename designation to  desig;
+ALTER TABLE
+learning=# \d emp;
+                       Table "public.emp"
+ Column |         Type          | Collation | Nullable | Default 
+--------+-----------------------+-----------+----------+---------
+ empid  | integer               |           |          | 
+ name   | character varying(15) |           |          | 
+ desig  | character varying(20) |           |          | 
+ doj    | date                  |           |          | 
+ salary | integer               |           |          | 
+ age    | integer               |           |          | 
+ status | boolean               |           |          | false
+
+learning=# alter table emp add mobile int;
+ALTER TABLE
+learning=# select * from emp;
+ empid |  name   |     desig     |    doj     | salary | age | status | mobile 
+-------+---------+---------------+------------+--------+-----+--------+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t      |       
+(1 row)
+
+learning=# drop column mobile;
+ERROR:  syntax error at or near "column"
+LINE 1: drop column mobile;
+             ^
+learning=# alter table emp drop column mobile;
+ALTER TABLE
+learning=# select * from emp;
+ empid |  name   |     desig     |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+(1 row)
+
+learning=# alter table emp drop coloum status;
+ERROR:  syntax error at or near "status"
+LINE 1: alter table emp drop coloum status;
+                                    ^
+learning=# alter table emp drop column status;
+ALTER TABLE
+learning=# select * from emp;
+ empid |  name   |     desig     |    doj     | salary | age 
+-------+---------+---------------+------------+--------+-----
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26
+(1 row)
+
+learning=# alater table emp drop column salary,age;
+ERROR:  syntax error at or near "alater"
+LINE 1: alater table emp drop column salary,age;
+        ^
+learning=# alter table emp drop column salary,age;
+ERROR:  syntax error at or near "age"
+LINE 1: alter table emp drop column salary,age;
+                                           ^
+learning=# select count(*) from emp;
+ count 
+-------
+     1
+(1 row)
+
+learning=# select count(*) as TotalEmployee from emp;
+ totalemployee 
+---------------
+             1
+(1 row)
+
+learning=# select * from employeebackup;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  35000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  35000 |  23 | t
+(4 rows)
+
+learning=# select * from employee greater than 25;
+ERROR:  syntax error at or near "than"
+LINE 1: select * from employee greater than 25;
+                                       ^
+learning=# select * from employeebackup age >25;
+ERROR:  syntax error at or near ">"
+LINE 1: select * from employeebackup age >25;
+                                         ^
+learning=# select * from employeebackup where age > 25;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+(1 row)
+
+learning=# select * from employeebackup where age>=25;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester        | 2021-06-02 |  20000 |  25 | f
+(2 rows)
+
+learning=# select * from employeebackup where age != 25;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   124 | Ramesh  | Developer        | 2022-06-02 |  35000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  35000 |  23 | t
+(3 rows)
+
+learning=# select * from employeebackup where age != 25 and salary<30000;
+ empid | name | designation | doj | salary | age | status 
+-------+------+-------------+-----+--------+-----+--------
+(0 rows)
+
+learning=# select * from employeebackup where age != 25 and salary<35000;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+(1 row)
+
+learning=# select * from employeebackup where age != 25 or salary<35000;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  35000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  35000 |  23 | t
+(4 rows)
+
+learning=# select * from employeebackup where age between 25 and 28;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester        | 2021-06-02 |  20000 |  25 | f
+(2 rows)
+
+learning=# select * from employeebackup where age>=25 and age<=28;
+ empid |  name   |  designation  |    doj     | salary | age | status 
+-------+---------+---------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester        | 2021-06-02 |  20000 |  25 | f
+(2 rows)
+
+learning=# select * from employeebackup where age in (14,16,25,28);
+ empid |  name  | designation |    doj     | salary | age | status 
+-------+--------+-------------+------------+--------+-----+--------
+   125 | Rajesh | Tester      | 2021-06-02 |  20000 |  25 | f
+(1 row)
+
+learning=# select * from employeebackup where age in(14,16,22,28);
+ empid | name | designation | doj | salary | age | status 
+-------+------+-------------+-----+--------+-----+--------
+(0 rows)
+
+learning=# select* from employeebackup;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  35000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  35000 |  23 | t
+(4 rows)
+
+learning=# select count(*) from employeebackup where age in(14,16,25,28);
+ count 
+-------
+     1
+(1 row)
+
+learning=# select count(*) as AgeCount from employeebackup where age in(14,16,22,28);
+ agecount 
+----------
+        0
+(1 row)
+
+learning=# select count(*) as AgeCount from employeebackup where age in(14,16,22,25);
+ agecount 
+----------
+        1
+(1 row)
+
+learning=# select * from employeebackup;
+ empid |  name   |   designation    |    doj     | salary | age | status 
+-------+---------+------------------+------------+--------+-----+--------
+   111 | Lavanya | Administrator    | 2021-04-02 |  30000 |  26 | t
+   125 | Rajesh  | Tester           | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh  | Developer        | 2022-06-02 |  35000 |  20 | t
+   123 | Hari    | Junior Developer | 2022-05-02 |  35000 |  23 | t
+(4 rows)
+
+learning=# select * from employeebackup where name like ('r%');
+ empid | name | designation | doj | salary | age | status 
+-------+------+-------------+-----+--------+-----+--------
+(0 rows)
+
+learning=# select * from employeebackup where name like ('R%');
+ empid |  name  | designation |    doj     | salary | age | status 
+-------+--------+-------------+------------+--------+-----+--------
+   125 | Rajesh | Tester      | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh | Developer   | 2022-06-02 |  35000 |  20 | t
+(2 rows)
+
+learning=# select * from employeebackup where name like ('%h');
+ empid |  name  | designation |    doj     | salary | age | status 
+-------+--------+-------------+------------+--------+-----+--------
+   125 | Rajesh | Tester      | 2021-06-02 |  20000 |  25 | f
+   124 | Ramesh | Developer   | 2022-06-02 |  35000 |  20 | t
+(2 rows)
+
+learning=# select * from employeebackup where name like ('%j%');
+ empid |  name  | designation |    doj     | salary | age | status 
+-------+--------+-------------+------------+--------+-----+--------
+   125 | Rajesh | Tester      | 2021-06-02 |  20000 |  25 | f
+(1 row)
+
+learning=# \d emp;
+                       Table "public.emp"
+ Column |         Type          | Collation | Nullable | Default 
+--------+-----------------------+-----------+----------+---------
+ empid  | integer               |           |          | 
+ name   | character varying(15) |           |          | 
+ desig  | character varying(20) |           |          | 
+ doj    | date                  |           |          | 
+ salary | integer               |           |          | 
+ age    | integer               |           |          | 
+
+learning=# \d employeebackup;
+                    Table "public.employeebackup"
+   Column    |         Type          | Collation | Nullable | Default 
+-------------+-----------------------+-----------+----------+---------
+ empid       | integer               |           |          | 
+ name        | character varying(15) |           |          | 
+ designation | character varying(20) |           |          | 
+ doj         | date                  |           |          | 
+ salary      | integer               |           |          | 
+ age         | integer               |           |          | 
+ status      | boolean               |           |          | 
+
+learning=# select name, designation from employeebackup where name like ('R%');
+  name  | designation 
+--------+-------------
+ Rajesh | Tester
+ Ramesh | Developer
+(2 rows)
+
+learning=# select name,empid from employeebackup;
+  name   | empid 
+---------+-------
+ Lavanya |   111
+ Rajesh  |   125
+ Ramesh  |   124
+ Hari    |   123
+(4 rows)
+
