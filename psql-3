@@ -1,0 +1,612 @@
+Last week studied:
+1)Installation of psql
+2)table creation 
+3)table create, update, delete
+4)select query
+
+select query:
+-------------
+select * from table_name;
+//This query will show everything from the table.  It will show all records from the table.
+
+But, we don't want full records. We want something specific records. This age category people. This, name starting letter people. This amount salary people. So, we needs to apply the filtering concept.
+
+Steps:
+
+1)sudo -i -u postgres;//This query used to enter into the postgres.
+
+Output:
+
+[sudo] password for abirami:            
+Sorry, try again.
+[sudo] password for abirami:            
+
+
+2)psql
+//This query is used for enter into the postgres console.
+
+Output:
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.12 (Ubuntu 12.12-0ubuntu0.20.04.1))
+Type "help" for help.
+
+
+3)\l
+//It will show entire data bases in the postgresql.
+
+
+4)\c learning;
+//You are now connected to database "learning" as user "postgres".
+
+What are the things are there in database. Rows and Columns. In other words, tables are there in database.
+
+5)\dt
+//It will show all the tables inside the learning database.
+            List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | emp            | table | postgres
+ public | employeebackup | table | postgres
+(2 rows)
+
+
+6)learning=# select * from emp;
+// This query is use to view the entire data inside the database.
+ empid |  name   |     desig     |    doj     | salary | age 
+-------+---------+---------------+------------+--------+-----
+   111 | Lavanya | Administrator | 2021-04-02 |  30000 |  26
+(1 row)
+
+
+7)learning=# select * from emp;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+(5 rows)
+
+
+Here, the above scenario our table have only 5 data. But, in real time scenario we have 1000's or lakhs of data.
+
+select * from table_name;// It gives all the data from the table. But, if we view all the data from the table is unnesessary thing. So, we want to be selective. We need to apply some filtering options for get the required data.
+
+
+For, example If i retrieve all the data from the database using select * from table_name; it will fetch all the data. So, it consume more time for retrieval and memory consumption too very high. We want to search optimisely. We need to retrive minimal data for whatever we want exactly.
+
+
+
+
+
+In real time scenario, if we want aadhar details for tamil nadu. But, i put the query 
+
+select * from aadhar_table;
+
+Then it retrieve all indian data. It's not the optimise code.
+
+We need to specify which state and district too. Then only we fetch the required data easily.
+
+1) select key word
+--> alias
+-It's a key word use to change the metadate in the presentation view.
+
+Whatever, we give in near to select query It will be print for your output.
+
+
+
+learning=# select empid, name, desig from emp;
+ empid |    name    |     desig     
+-------+------------+---------------
+   111 | Lavanya    | Administrator
+   125 | Rajesh     | Tester
+   101 | kalel      | Developer
+   124 | Ramesh     | Developer
+   151 | kalelBasha | Developer
+(5 rows)
+ 
+
+
+So, we conclude we don't want entire table but, we need the specific data then we need to give that data near the select key word.
+
+If i want only salary. Then we need the query like below.
+
+
+earning=# select salary from emp;
+ salary 
+--------
+  30000
+  20000
+  10000
+  35000
+  35000
+(5 rows)
+
+
+
+* --> it will give everything.
+specify the column name meta data it will give that column entirely.
+
+select * from emp;// select everything from emp table.
+
+
+learning=# select empid, name, desig from emp;
+ empid |    name    |     desig     
+-------+------------+---------------
+   111 | Lavanya    | Administrator
+   125 | Rajesh     | Tester
+   101 | kalel      | Developer
+   124 | Ramesh     | Developer
+   151 | kalelBasha | Developer
+(5 rows)
+
+If we don't want everything, then we need to give the specified column meta data name.
+
+
+But, we can able to change the meta data name and convert it into user friendly.  Example, from the above output desig not understandable for everyone. So, we can able to change with this.
+
+
+
+learning=# select empid as Employee_ID,name as Name,desig as Designation from emp;
+ employee_id |    name    |  designation  
+-------------+------------+---------------
+         111 | Lavanya    | Administrator
+         125 | Rajesh     | Tester
+         101 | kalel      | Developer
+         124 | Ramesh     | Developer
+         151 | kalelBasha | Developer
+(5 rows)
+
+
+
+Use the key word "as" for rename the metadata in the presentation view.
+alias -->as is a keyword. 
+
+In the above output gave all the modified meta data names are change to small letters. We don't want that change then our query will be like below. All the names after give as key word needs to give in double quote.
+
+
+learning=# select empid as "Employee_ID",name as "Name",desig as "Designation" from emp;
+ Employee_ID |    Name    |  Designation  
+-------------+------------+---------------
+         111 | Lavanya    | Administrator
+         125 | Rajesh     | Tester
+         101 | kalel      | Developer
+         124 | Ramesh     | Developer
+         151 | kalelBasha | Developer
+(5 rows)
+
+
+Now, our original table will be like below.
+
+learning=# select * from emp;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+(5 rows)
+
+
+So, we can tell,
+
+1) Any select query can't alter the table.
+
+
+If i want to give the space that time to i need to give that modifying meta data name as inside the double quote.
+
+
+learning=# select empid as "Employee Id", name as "Name", desig as "Designation" from emp;
+ Employee Id |    Name    |  Designation  
+-------------+------------+---------------
+         111 | Lavanya    | Administrator
+         125 | Rajesh     | Tester
+         101 | kalel      | Developer
+         124 | Ramesh     | Developer
+         151 | kalelBasha | Developer
+(5 rows)
+
+
+If i try to give the space without the double quote. Then, my output will come for with the syntax error. like below.
+
+
+learning=# select empid as Employee Id, name as Name, desig as Designation from emp;
+ERROR:  syntax error at or near "Id"
+LINE 1: select empid as Employee Id, name as Name, desig as Designat...
+
+
+as is a keyword. But, it's an optional. We, don't need to give compulsarily. If i give directly the modifying name in meta data within a closed double quote bracket it will take is it alias name directly. 
+
+learning=# select empid "Employee Id",name as Name,desig as Designation from emp;
+ Employee Id |    name    |  designation  
+-------------+------------+---------------
+         111 | Lavanya    | Administrator
+         125 | Rajesh     | Tester
+         101 | kalel      | Developer
+         124 | Ramesh     | Developer
+         151 | kalelBasha | Developer
+(5 rows)
+
+
+learning=# select empid EmployeeId,name Name, desig Designation from emp;
+ERROR:  syntax error at or near "Name"
+LINE 1: select empid EmployeeId,name Name, desig Designation from em...
+
+
+In Mathematical Operation in sql:
+learning=# select 5*60;
+ ?column? 
+----------
+      300
+(1 row)
+
+learning=# select 5*60 as Product;
+ product 
+---------
+     300
+(1 row)
+
+learning=# select 5*60 "Product";
+ Product 
+---------
+     300
+(1 row)
+
+learning=# select 5*60 Product;
+ product 
+---------
+     300
+(1 row)
+
+
+
+
+So, we can conclude:
+
+select * from table_name;
+1) alias --> as (optional)
+user can define the column.
+   -If alias name has space inbetween then you should surround it by "".
+
+
+
+
+2)order by - clause
+
+We can able to specify the order of the data. 
+Salary high to low.
+then low to high.
+ascending and descending order.
+age wise can able to print the data.
+
+#) print the data from order by age wise.
+-----------------------------------------
+learning=# select * from emp order by age;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+(5 rows)
+
+Note: Defaultly, it will print using ascending order. We didn't mention it.
+
+learning=# select * from emp order by age desc;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+(5 rows)
+
+
+
+Note: We need to mention if it is need to print descending order.
+
+descending order - desc --> is a key word.
+
+It will order alphabetically, if i print order by name and desig. Output will be like below.
+
+learning=# 
+learning=# select * from emp order by name;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+(5 rows)
+
+learning=# select * from emp order by desig;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+(5 rows)
+ 
+
+
+learning=# ^C
+learning=# select * from emp order by name desc;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+(5 rows)
+
+
+
+learning=# select * from emp order by doj;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+(5 rows)
+
+
+
+learning=# select * from emp order by doj asc;
+ empid |    name    |     desig     |    doj     | salary | age 
+-------+------------+---------------+------------+--------+-----
+   111 | Lavanya    | Administrator | 2021-04-02 |  30000 |  26
+   125 | Rajesh     | Tester        | 2021-06-02 |  20000 |  25
+   101 | kalel      | Developer     | 2022-06-02 |  10000 |  34
+   124 | Ramesh     | Developer     | 2022-06-02 |  35000 |  20
+   151 | kalelBasha | Developer     | 2022-06-02 |  35000 |  34
+(5 rows)
+
+
+
+order by --> clause
+
+for ascending  --> asc(default)
+for descending --> desc
+
+
+clause in database means, it's a function,or set or keyword.
+
+Many clauses are there in sql. But, we needs to learn depend on interview base. We can able to do everything using this minimum set of function.
+
+We need to think logically. We don't want to write that query seperately. We can able to overlap that query. like below.
+
+
+learning=# select name "Name", desig "Designation", doj "Date of Joining" from emp order by doj asc;
+    Name    |  Designation  | Date of Joining 
+------------+---------------+-----------------
+ Lavanya    | Administrator | 2021-04-02
+ Rajesh     | Tester        | 2021-06-02
+ kalel      | Developer     | 2022-06-02
+ Ramesh     | Developer     | 2022-06-02
+ kalelBasha | Developer     | 2022-06-02
+(5 rows)
+
+
+3)Distinct - தனித்துவமான,Unique.
+
+This is a key word. Use, to apply on column.
+
+order by also the key word. Use to apply on column.
+
+It's also used under select statement. It will remove the duplicates.
+
+Distinct means one thing will consider at only one time.
+
+Distinct is a key word for apply on column of meta data only.
+
+It, will print unique elements only.
+
+
+
+
+Distinct : --> clause
+----------------------
+It is applied in the column.
+used for remove duplicate rows from the result set.
+
+distinct is comes for neary by select query. after the distinct key word one column name will come.
+
+
+Real time example:
+
+- We can able to apply student table for identify the departments.
+- We can able to apply student table for identify the mobile number duplicates.
+
+
+
+
+learning=# select distinct desig from emp;
+     desig     
+---------------
+ Tester
+ Developer
+ Administrator
+(3 rows)
+
+learning=# select distinct salary from emp;
+ salary 
+--------
+  30000
+  10000
+  20000
+  35000
+(4 rows)
+
+It's used to apply only one column. Try to apply 2 columns then it won't give unique element properly. like below.
+
+learning=# select distinct salary , name from emp;
+ salary |    name    
+--------+------------
+  20000 | Rajesh
+  10000 | kalel
+  35000 | Ramesh
+  30000 | Lavanya
+  35000 | kalelBasha
+(5 rows)
+
+
+
+
+4) where [It's very very important key word.]
+
+select -----------/* from tableName where expression.
+
+>,<,>=.<=, =,and,or,not --> <> or !=
+
+csv - comma seperated value.
+it's a file . Each value from this file  seperated by commas.
+
+.csv,.txt,.pdf--> is a file formats.
+
+All csv files are can able to open using excel.
+
+.txt files are can able to open using notepadqq, text editor etc.
+
+sample employee table csv:
+https://eforexcel.com/wp/downloads-16-sample-csv-files-data-sets-for-testing/
+
+how to alter the column size in postgresql
+
+how to import csv into psql using cmd:
+1) create the table.
+2)copy employee from '/home/abirami/Documents/employee.csv' delimiter',' csv header;
+
+how to alter the column size in postgresql
+Syntax:
+Alter table table_name
+     Alter column column_name type column definition;
+
+learning=# alter table employee alter column emailID type character varying(120);
+ALTER TABLE
+learning=# copy employee from '/home/abirami/Documents/employee.csv' delimiter',' csv header;
+COPY 100
+learning=# 
+
+q--> it's for exit.
+
+
+abirami@abirami-HP-Laptop-15-da3xxx:~$ sudo -i -u postgres
+[sudo] password for abirami:            
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.12 (Ubuntu 12.12-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# \c learning
+You are now connected to database "learning" as user "postgres".
+learning=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | emp            | table | postgres
+ public | employee       | table | postgres
+ public | employeebackup | table | postgres
+(3 rows)
+
+learning=# select * from employee;
+learning=# copy employee from '/home/abirami/Documents/employee.csv' delimiter',' csv header;
+COPY 100
+learning=# select * from employee;
+learning=# 
+learning=# copy employee from '/home/abirami/Documents/employee.csv' delimiter'|' csv header;
+ERROR:  value too long for type character varying(20)
+CONTEXT:  COPY employee, line 2, column empid: "677509,Drs.,Lois,H,Walker,F,lois.walker@hotmail.com"
+learning=# select * from employee;
+learning=# select * from employee order by empid;
+learning=# select * from employee;
+learning=# select distinct(empid) from employee;
+learning=# 
+
+
+
+learning=# select * from employee;
+learning=# copy employee from '/home/abirami/Documents/employee.csv' delimiter',' csv header;
+COPY 100
+learning=# select * from employee;
+learning=# 
+learning=# copy employee from '/home/abirami/Documents/employee.csv' delimiter'|' csv header;
+ERROR:  value too long for type character varying(20)
+CONTEXT:  COPY employee, line 2, column empid: "677509,Drs.,Lois,H,Walker,F,lois.walker@hotmail.com"
+learning=# select * from employee;
+learning=# select * from employee order by empid;
+learning=# select * from employee;
+learning=# select distinct(empid) from employee;
+learning=# select * from employee where gender='F';
+learning=# select * from employee where gender = 'F';
+learning=# select * from employee;
+learning=# select * from employee where gender = 'F';
+learning=# select * from employee where gender = 'F' and prefix = 'Mrs.';
+ empid  | prefix |  fname  | mname |  lname  | gender |         emailid          
+--------+--------+---------+-------+---------+--------+--------------------------
+ 380086 | Mrs.   | Carol   | V     | Murphy  | F      | carol.murphy@gmail.com
+ 386158 | Mrs.   | Melissa | Q     | King    | F      | melissa.king@comcast.net
+ 441771 | Mrs.   | Cheryl  | O     | Scott   | F      | cheryl.scott@gmail.com
+ 388642 | Mrs.   | Ruby    | R     | Rogers  | F      | ruby.rogers@gmail.com
+ 477253 | Mrs.   | Anne    | L     | Russell | F      | anne.russell@ibm.com
+ 879753 | Mrs.   | Pamela  | X     | Wright  | F      | pamela.wright@aol.com
+ 447813 | Mrs.   | Ann     | Q     | Coleman | F      | ann.coleman@ibm.com
+ 491943 | Mrs.   | Nancy   | P     | Howard  | F      | nancy.howard@gmail.com
+ 765850 | Mrs.   | Linda   | R     | Moore   | F      | linda.moore@gmail.com
+ 623253 | Mrs.   | Ruby    | Q     | Stewart | F      | ruby.stewart@gmail.com
+ 392491 | Mrs.   | Theresa | R     | Murphy  | F      | theresa.murphy@gmail.com
+ 380086 | Mrs.   | Carol   | V     | Murphy  | F      | carol.murphy@gmail.com
+ 386158 | Mrs.   | Melissa | Q     | King    | F      | melissa.king@comcast.net
+ 441771 | Mrs.   | Cheryl  | O     | Scott   | F      | cheryl.scott@gmail.com
+ 388642 | Mrs.   | Ruby    | R     | Rogers  | F      | ruby.rogers@gmail.com
+ 477253 | Mrs.   | Anne    | L     | Russell | F      | anne.russell@ibm.com
+ 879753 | Mrs.   | Pamela  | X     | Wright  | F      | pamela.wright@aol.com
+ 447813 | Mrs.   | Ann     | Q     | Coleman | F      | ann.coleman@ibm.com
+ 491943 | Mrs.   | Nancy   | P     | Howard  | F      | nancy.howard@gmail.com
+ 765850 | Mrs.   | Linda   | R     | Moore   | F      | linda.moore@gmail.com
+ 623253 | Mrs.   | Ruby    | Q     | Stewart | F      | ruby.stewart@gmail.com
+ 392491 | Mrs.   | Theresa | R     | Murphy  | F      | theresa.murphy@gmail.com
+(22 rows)
+
+learning=# select * from employee where gender = 'F' and prefix = 'Mrs.' and empid>528509;
+ERROR:  operator does not exist: character varying > integer
+LINE 1: ...yee where gender = 'F' and prefix = 'Mrs.' and empid>528509;
+                                                               ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+learning=# select * from employee where gender = 'F' and prefix = 'Mrs.' and empid>'528509';
+ empid  | prefix | fname  | mname |  lname  | gender |        emailid         
+--------+--------+--------+-------+---------+--------+------------------------
+ 879753 | Mrs.   | Pamela | X     | Wright  | F      | pamela.wright@aol.com
+ 765850 | Mrs.   | Linda  | R     | Moore   | F      | linda.moore@gmail.com
+ 623253 | Mrs.   | Ruby   | Q     | Stewart | F      | ruby.stewart@gmail.com
+ 879753 | Mrs.   | Pamela | X     | Wright  | F      | pamela.wright@aol.com
+ 765850 | Mrs.   | Linda  | R     | Moore   | F      | linda.moore@gmail.com
+ 623253 | Mrs.   | Ruby   | Q     | Stewart | F      | ruby.stewart@gmail.com
+(6 rows)
+
+learning=# select * from employee where gender = 'F' and prefix = 'Mrs.' and empid > '528509';
+ empid  | prefix | fname  | mname |  lname  | gender |        emailid         
+--------+--------+--------+-------+---------+--------+------------------------
+ 879753 | Mrs.   | Pamela | X     | Wright  | F      | pamela.wright@aol.com
+ 765850 | Mrs.   | Linda  | R     | Moore   | F      | linda.moore@gmail.com
+ 623253 | Mrs.   | Ruby   | Q     | Stewart | F      | ruby.stewart@gmail.com
+ 879753 | Mrs.   | Pamela | X     | Wright  | F      | pamela.wright@aol.com
+ 765850 | Mrs.   | Linda  | R     | Moore   | F      | linda.moore@gmail.com
+ 623253 | Mrs.   | Ruby   | Q     | Stewart | F      | ruby.stewart@gmail.com
+(6 rows)
+
+learning=# 
+
+
+
+insert into employee values(1,'hari',sd),(2,'muthu',teste);
+
+
