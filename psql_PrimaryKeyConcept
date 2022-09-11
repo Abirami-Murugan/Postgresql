@@ -1,0 +1,492 @@
+1)primary key
+2)Foreign key
+3)group by
+4)joins
+
+group by: it will come for before order by clause.
+
+- your table has n-kind of data. so, we need to have a count of each kind.
+
+for example, total number of indian candidates from the all nations people.
+How many American Candidates are there.
+How many Canadian Candidates are there.
+
+group by --> means we need to apply any column.
+
+-> order by & group by both are applied on column name.
+
+What is the difference between distinct and group by?
+----------------------------------------------------
+
+distinct                                group by
+----------                             -----------
+It will give the                      It, will make the team for same values.
+unique values
+from the table.                       eg: 800 mark people are one group.
+                                      eg: 500 mark people are one group.
+                                      eg: 400 mark people are one group.
+
+
+Input Table
+------------
+
+Customers:
+
+customer_id |	first_name |	last_name |	age	 | country
+1           | 	John	   |     Doe	  | 31	 |    USA
+2	        |   Robert	   |     Luna	  | 22	 |    USA
+3	        |   David	   |    Robinson  |	22	 |     UK
+4	        |   John	   |    Reinhardt | 25	 |     UK
+5	        |   Betty	   |    Doe	      | 28	 |    UAE
+
+SELECT * FROM Customers;
+
+
+Output
+customer_id	first_name	last_name	age	country
+1	            John	Doe	         31	USA
+2	            Robert	Luna	     22	USA
+3	            David	Robinson	 22	UK
+4         	    John	Reinhardt    25	UK
+5	            Betty	Doe       	 28	UAE
+
+
+select country from customers group by country;
+
+Output:
+country
+UAE
+UK
+USA
+
+select country, age from customers group by age;
+
+Output
+country	age
+ USA	22
+ UK	    25
+ UAE	28
+ USA	31
+
+
+select country, age ,first_name from customers group by first_name;
+
+
+
+Output
+country	age	first_name
+ UAE	28	Betty
+  UK	22	David
+ USA	31	John
+ USA	22	Robert
+
+
+select count(*) from Customers;
+
+Output
+count(*)
+5
+
+select count(*) as total_person from Customers:
+
+Output
+-------
+total_person
+5
+
+select age from Customers group by age;
+
+Output
+age
+22
+25
+28
+31
+
+
+select country from Customers group by country;
+
+
+Output
+------
+country
+-------
+UAE
+UK
+USA
+
+
+
+USA, UK, UAE all are each team.
+
+
+select count(country) from Customers group by country;
+
+Output
+count(country)
+1
+2
+2
+
+
+select count(country) as total_country from Customers group by country;
+
+
+Output
+total_country
+1
+2
+2
+
+
+select count(country) as "CountryCount" from Customers group by country;
+
+Output
+CountryCount
+1
+2
+2
+
+
+
+select country,count(country) as "CountryCount" from Customers group by country;
+
+
+
+Output
+country	CountryCount
+    UAE	1
+    UK	2
+    USA	2
+
+
+select age,count(age) as "AgeCount" from customers group by age;
+
+Output
+age	AgeCount
+22	2
+25	1
+28	1
+31	1
+
+
+aggregate function: max,min,in,between,always,count.
+
+select first_name,count(first_name) from Customers group by first_name;
+
+
+Output
+first_name	count(first_name)
+     Betty	1
+     David	1
+     John	2
+     Robert	1
+
+
+learning=# select prefix,count(prefix) from employee group by prefix;
+ prefix | count 
+--------+-------
+ Mrs.   |    11
+ Prof.  |     5
+ Mr.    |    25
+ Drs.   |     9
+ Ms.    |    28
+ Dr.    |     4
+ Hon.   |    18
+(7 rows)
+
+
+
+select customer_id,count(customer_id) from Customers group by customer_id;
+ 
+
+Output
+customer_id	 count(customer_id)
+        1	  1
+        2	  1
+        3	  1
+        4	  1
+        5	  1
+
+
+group by - Usage:
+
+Do you have enormous amount of data. Then, you need to group the group of people or seperate similar kind of people.
+
+group can be make whatever:
+
+-lname,
+-country,
+-age,
+-How many male candidates,
+-How many female candidates are there for my employee table.
+
+
+
+select * from employee where gender = 'F';
+select * from employee where gender = 'M';
+
+The above two queries will be equal to like below.
+
+select gender,count(gender) from employee group by gender;
+ gender | count 
+--------+-------
+ M      |    40
+ F      |    60
+(2 rows)
+
+
+
+Primary Key: It's a Theory part.
+-----------------------------------
+-Primary key constraint uniquely identifies each record in a table.
+-Primary keys must contain UNIQUE values, and cannot contain NULL values.
+-A table can have only ONE primary key; 
+eg 1: aadhar No.
+and in the table, this
+primary key can consist of single or multiple columns (fields).
+eg:aadhar NO and Mobile Number.
+eg:aadhar No and Gmail Id.
+eg:Transaction Number, Order Id.
+
+Primary key is non repeatable values.
+Primary key can have certain rules. 
+1) It can't allow a duplicate key.
+2) It can't contain Null values.
+
+
+Primary key can have only one in a table. But, it can have consist of many columns.
+
+eg:
+
+Alter table persons
+Add constraint Pk_Person Primary key(ID,LastName);
+
+id  lastname     fname      age
+    
+1    raj       prithivi      30
+2    raj       ravi          40
+3    ravi       kumar        50
+
+
+Foreign Key:
+
+A foreign key is a field(or collection of fields) in one table, that refers to the primary key in another table.
+
+A table with foreign key is called the child table, and the table with the primary key is called the referenced or parent table.
+
+Why the foreign key is?
+
+It is used to relate one table to another table.
+
+In relational data base seperate concept have seperate table.
+
+
+Student table
+--------------
+
+roll_no         name         age     address
+123             Harish        15     Chennai
+124             Haritha       14     Tirunelveli
+234             Saritha       13     Madurai
+
+Marks
+-------------
+
+roll_no   tamil   english   maths
+123        59        60       55
+124        65        70       75
+234        45        50       40
+
+
+One table can have relation with another table compulsarily.
+
+
+3)Joins:
+---------
+
+Update table person = set blood group = B+ve where id = 1 
+select.
+
+-Inner Join.
+
+
+select Customers.customer_id,first_name,age,order_id,item,amount from Customers inner join orders on 
+Customers.customer_id = Orders.customer_id;
+ 
+
+Output
+customer_id 	first_name	age	 order_id	item	amount
+          4	      John	     25 	1	   Keyboard	 400
+          4	      John	     25	    2	   Mouse	 300
+          3	     David	     22	    3	   Monitor	12000
+          1	      John	     31	    4     Keyboard	 400
+          2  	Robert	     22	    5	  Mousepad	 250
+
+In foreign key, through out the database need to maintain same name. Exceptions also there. So, we need to understand the
+concept.
+
+
+select customer_id,first_name,age,shipping_id,status from Customers inner join Shippings on customer_id
+= customer;
+ 
+
+Output
+customer_id	first_name	age	shipping_id	 status
+          2 	Robert	22	       1	 Pending
+          4 	John	25	       2	 Pending
+          3 	David	22	       3	 Delivered
+          5	    Betty	28	       4	 Pending
+          1	     John	31	       5	 Delivered
+
+
+
+
+select customer_id,first_name,age,shipping_id,status from Customers left join shippings on 
+customer_id = customer;
+
+
+Output
+-------
+customer_id	first_name	age	shipping_id	status
+       1	John	    31	       5	Delivered
+       2	Robert	    22	       1	Pending
+       3	David	    22	       3	Delivered
+       4	John	    25	       2	Pending
+       5	Betty	    28	       4	Pending
+
+
+
+
+select customer_id,first_name,age,shipping_id,status from Customers left join shippings on  
+customer_id = customer where age >25;
+
+Output
+customer_id	first_name	age	shipping_id	  status
+          1	  John	     31	  5	         Delivered
+          5   Betty	     28   4   	     Pending
+
+
+
+
+select customer_id, first_name,age,shipping_id,status from Customers left join shippings on 
+customer_id = customer where age >25 and status !='Delivered';
+
+Output
+customer_id	  first_name	 age	 shipping_id 	status
+        5	    Betty	     28     	4       	Pending
+
+
+
+
+Needs to join 3 tables:
+
+We needs to go to the sub query concept.
+
+join(select customer_id, first_name,age,shipping_id,status from Customers left join shippings on 
+customer_id = customer where age >25 and status !='Delivered');
+
+
+Use the below website to learn the SQL:
+
+  ----------
+ | SQL Bolt |
+  ----------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Notes -->
+
+abirami@abirami-HP-Laptop-15-da3xxx:~$ sudo -i -u postgres;
+[sudo] password for abirami:            
+postgres@abirami-HP-Laptop-15-da3xxx:~$ psql
+psql (12.12 (Ubuntu 12.12-0ubuntu0.20.04.1))
+Type "help" for help.
+
+postgres=# \c learning
+You are now connected to database "learning" as user "postgres".
+learning=# create table Person(ID int Not NUll Primary Key,fname Not Null,lname,Age);
+ERROR:  syntax error at or near "Not"
+LINE 1: ...te table Person(ID int Not NUll Primary Key,fname Not Null,l...
+                                                             ^
+learning=# create table Person(ID int Not NUll Primary Key,fname varchar(15) NOt NUll,lname varchar(15) , Age int);
+CREATE TABLE
+learning=# insert values Person into(1,abi,murugan,26);
+ERROR:  syntax error at or near "values"
+LINE 1: insert values Person into(1,abi,murugan,26);
+               ^
+learning=# insert into Person(1,abi,murugan,26);
+ERROR:  syntax error at or near "1"
+LINE 1: insert into Person(1,abi,murugan,26);
+                           ^
+learning=# insert into Person values(1,abi,murugan,26);
+ERROR:  column "abi" does not exist
+LINE 1: insert into Person values(1,abi,murugan,26);
+                                    ^
+learning=# create table member(ID int Not Null Primary Key,fname varchar(15),lname varchar(15),Age int);
+CREATE TABLE
+learning=# \dt
+             List of relations
+ Schema |      Name      | Type  |  Owner   
+--------+----------------+-------+----------
+ public | emp            | table | postgres
+ public | employee       | table | postgres
+ public | employeebackup | table | postgres
+ public | member         | table | postgres
+ public | person         | table | postgres
+(5 rows)
+
+learning=# \d learning;
+Did not find any relation named "learning".
+learning=# insert into member values(1,abi,murugan,26);
+ERROR:  column "abi" does not exist
+LINE 1: insert into member values(1,abi,murugan,26);
+                                    ^
+learning=# insert into member values(1,'abi','murugan',26);
+INSERT 0 1
+learning=# insert into member values(2,'anu','John',28);
+INSERT 0 1
+learning=# insert into member values(2,'hari',kumar,29);
+ERROR:  column "kumar" does not exist
+LINE 1: insert into member values(2,'hari',kumar,29);
+                                           ^
+learning=# insert into member values(2,'hari','kumar',29);
+ERROR:  duplicate key value violates unique constraint "member_pkey"
+DETAIL:  Key (id)=(2) already exists.
+learning=# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
